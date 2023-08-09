@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """ Script for creating the capulet engine for the car """
 
-from engine import Engine
+from .engine import Engine
 
 
 class Capulet(Engine):

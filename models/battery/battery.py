@@ -4,5 +4,5 @@ from abc import ABC, abstractmethod
 class Battery(ABC):
 
     @abstractmethod
-    def need_services(self, *args, **kwargs):
+    def needs_service(self, *args, **kwargs):
         pass
