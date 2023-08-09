@@ -18,7 +18,8 @@ from models.engine.wiloughby import Wiloughby
 from models.engine.engine import Engine
 from models.battery.battery import Battery
 from typing import TypeAlias
-from datetime import Date
+from datetime import date
+import pdb
 
 
 
@@ -26,43 +27,44 @@ bat:TypeAlias = Battery
 eng:TypeAlias = Engine
 
 def create_car(name: str, *args: list):
+    # pdb.set_trace()
     class Car():
-        def __init__(battery: bat, engine: eng):
+        def __init__(self, battery: bat, engine: eng, *args, **kwargs):
             self.battery, self.engine = battery, engine
-            self.start_car(name, args)
+            self.start_car(name, *args)
 
-        def start_car(string: str, *args):
+        def start_car(self, string: str, *args):
             cars ={ "calliope": self.create_calliope, "gilssade": self.create_gilssage,
                 "palindrome": self.create_palindrome, "rorschach": self.create_rorschach,
                 "thovex": self.create_thovex
             }
+            # pdb.set_trace()
             car = cars.get(string)(*args)
-            self.undergoes_processes()
             return car
 
-        def create_calliope(current_date: Date, last_service_date: Date, current_mileage: int, last_service_mileage: int):
-            self.battery = self.battery.__init__(last_service_date, current_date)
-            self.engine = self.engine.__init__(last_service_mileage, current_mileage)
+        def create_calliope(self, current_date: date, last_service_date: date, current_mileage: int, last_service_mileage: int):
+            self.battery = self.battery(last_service_date, current_date)
+            self.engine = self.engine(last_service_mileage, current_mileage)
 
-        def create_gilssage(current_date: Date, last_service_date: Date, current_mileage: int, last_service_mileage: int):
-            self.battery = self.battery.__init__(last_service_date, current_date)
-            self.engine = self.engine.__init__(last_service_mileage, current_mileage)
+        def create_gilssage(self, current_date: date, last_service_date: date, current_mileage: int, last_service_mileage: int):
+            self.battery = self.battery(last_service_date, current_date)
+            self.engine = self.engine(last_service_mileage, current_mileage)
 
-        def create_palindrome(current_date: Date, last_service_date: Date, warning_light_on: bool):
-            self.battery = self.battery.__init__(last_service_date, current_date)
-            self.engine = self.engine.__init__(warning_light_on)
+        def create_palindrome(self, current_date: date, last_service_date: date, warning_light_on: bool):
+            self.battery = self.battery(last_service_date, current_date)
+            self.engine = self.engine(warning_light_on)
 
-        def create_rorschach(current_date: Date, last_service_date: Date, current_mileage: int, last_service_mileage: int):
-            self.battery = self.battery.__init__(last_service_date, current_date)
-            self.engine = self.engine.__init__(last_service_mileage, current_mileage)
+        def create_rorschach(self, current_date: date, last_service_date: date, current_mileage: int, last_service_mileage: int):
+            self.battery = self.battery(last_service_date, current_date)
+            self.engine = self.engine(last_service_mileage, current_mileage)
 
-        def create_thovex(current_date: Date, last_service_date: Date, current_mileage: int, last_service_mileage: int):
-            self.battery = self.battery.__init__(last_service_date, current_date)
-            self.engine = self.engine.__init__(last_service_mileage, current_mileage)
+        def create_thovex(self, current_date: date, last_service_date: date, current_mileage: int, last_service_mileage: int):
+            self.battery = self.battery(last_service_date, current_date)
+            self.engine = self.engine(last_service_mileage, current_mileage)
 
-        def undergoes_processes(self):
-            self.battery.needs_service()
-            self.engine.needs_service()
+        def needs_service(self):
+            if self.battery.needs_service() or self.engine.needs_service():
+                return True
             return False
 
     cars ={
@@ -72,5 +74,6 @@ def create_car(name: str, *args: list):
         "rorschach": (Nubbin, Wiloughby),
         "thovex": (Nubbin, Capulet),
     }
-    new_car = Car(*cars.get(name)[0])
+    # pdb.set_trace()
+    new_car = Car(*cars.get(name), *args)
     return new_car
